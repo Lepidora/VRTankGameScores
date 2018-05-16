@@ -1,0 +1,15 @@
+{
+  "name": "TankScores",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^3.2.6",
+    "jade": "*",
+    "node-sass-middleware": "^0.11.0",
+    "socket.io": "^2.1.0"
+  }
+}

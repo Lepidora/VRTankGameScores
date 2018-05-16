@@ -1,0 +1,141 @@
+@import 'ceryx.scss';
+
+$hover-size: 80px;
+
+body {
+	font-size: 200%;
+}
+
+h2.alt {
+    @include heading-style($h2-font-size, #fff, $h2-font-weight, $h2-bottom-margin);
+}
+
+h2.plain {
+    @include heading-style($h2-font-size, $h1-text-color, $h2-font-weight, $h2-bottom-margin);
+}
+
+.center-contents {
+	
+	position: relative;
+	width: 100%;
+	
+	display: flex;
+	align-items: center;
+	justify-content: center;	
+}
+
+.hover-bar {
+	
+	position: fixed;
+	
+	width: 100%;
+	height: $hover-size;
+	
+	top: 0px;
+	
+	background-color: #fff;
+	
+	z-index: 5;
+	
+	padding-top: $hover-size / 5;
+	
+	box-shadow: 0px -4px 8px #000;
+}
+
+.content {
+	
+	position: relative;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	
+	width: 100%;
+	
+    margin-top: $hover-size * 1.2;
+	top: 0px;
+	bottom: 0px;
+}
+
+.content-column {
+	
+	position: relative;
+	
+	width: 40%;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+	top: 16px;
+	
+	margin-bottom: 32px;
+}
+
+.card-column {
+    width: 90%;
+}
+
+.score-card {
+	
+	position: relative;
+	
+	width: 100%;
+	height: 70px;
+	
+	box-shadow: 0px 2px 4px #bbb;
+	
+	padding: 0px 8px 0px 8px;
+	
+	margin-bottom: 16px;
+	
+	border-radius: 8px;
+	
+	display: flex;
+	justify-content: center;
+	
+	background-color: #fdfdfd;
+	
+	
+	text-transform: capitalize;
+}
+
+.win {
+	background-color: #76fc6e;
+}
+
+.lose {
+	background-color: #f2534e;
+}
+
+/* Tablets and up */
+@media only screen and (min-width: 768px) {
+    .content {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .content-column {
+        width: 40%;
+    }
+    
+    h1 {
+        font-size: $h1-font-size;
+    }
+} 
+
+/* Small tablets and below */
+@media only screen and (max-width: 767px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }	
+    
+    .content-column {
+        width: 90%;
+    }
+    
+    h1 {
+        font-size: 8vw;
+    }
+}

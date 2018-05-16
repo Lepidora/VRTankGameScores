@@ -1,0 +1,170 @@
+<html>
+<head>
+    <title>VR Tank Game Scores</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+    
+    $(function() {
+    	
+    	var socket = io();
+        
+        socket.emit('getscores', {});
+        
+        console.log('emitting');
+        
+        socket.on('scores', function(scoredata) {
+            
+        	   var scores = scoredata.scores;
+        	   var latestwin = scoredata.latestwin;
+        	   var latestlose = scoredata.latestlose;
+        	
+            console.log(scores);
+            
+               if (scores && scores.win && scores.lose) {
+                   
+                   var wincards = $('#win');
+                   var losecards = $('#lose');
+                   
+                   wincards.empty();
+                   losecards.empty();
+                   
+                   for (var i = 0; i < scores.win.length; i++) {
+                       
+                        var scoredat = scores.win[i];
+                        
+                        var score = scoredat.score;
+                        var name = scoredat.name;
+                        
+                        var card = $('<div>');
+                        card.addClass('score-card');
+                        card.addClass('win');
+                        
+                        var text = $('<h2>');
+                        text.addClass('gradient');
+                        text.addClass('alt');
+                        text.text(score + " - " + name);
+                        
+                        card.append(text);
+                        
+                        wincards.append(card);
+                        
+                        console.log('Appended!');
+                        console.log(card);
+                   }
+                   
+                   for (var i = 0; i < scores.lose.length; i++) {
+                       
+                       var scoredat = scores.lose[i];
+                       
+                       var score = scoredat.score;
+                       var name = scoredat.name;
+                       
+                       var card = $('<div>');
+                       card.addClass('score-card');
+                       card.addClass('lose');
+                       
+                       var text = $('<h2>');
+                       text.addClass('gradient');
+                       text.addClass('alt');
+                       text.text(score + " - " + name);
+                       
+                       card.append(text);
+                       
+                       losecards.append(card);
+                       
+                       console.log('Appended!');
+                       console.log(card);
+                  }
+               }
+               
+               var latestwincards = $('#latestwin');
+               var latestlosecards = $('#latestlose');
+               
+               latestwincards.empty();
+               latestlosecards.empty();
+               
+               if (latestwin && latestwin != null) {
+            	       
+            	       for (var i = 0; i < latestwin.length; i++) {
+            	    	       var card = $('<div>');
+                           
+                           card.addClass('score-card');
+                           card.addClass('win');
+                           
+                           card.click(editName(true, i));
+                           
+                           var text = $('<h2>');
+                           text.addClass('gradient');
+                           text.addClass('alt');
+                           text.text(latestwin[i]);
+                           
+                           card.append(text);
+                           
+                           latestwincards.append(card);
+				}
+            	   
+            	       
+            	   }
+               
+               if (latestlose && latestlose != null) {
+                   
+            	       for (var i = 0; i < latestlose.length; i++) {
+            	    	           var card = $('<div>');
+                           
+                           card.addClass('score-card');
+                           card.addClass('lose');
+                           
+                           card.click(editName(false, i));
+                           
+                           var text = $('<h2>');
+                           text.addClass('gradient');
+                           text.addClass('alt');
+                           text.text(latestlose[i]);
+                           
+                           card.append(text);
+                           
+                           latestlosecards.append(card);
+					}
+            	   
+                   
+               }
+        });
+    });
+    
+    function editName(win, id) {
+    	    
+        	return function() {
+        	    var name = prompt("Please enter your name:", "");
+            
+        		    if (name != null && name != "") {
+        		        
+        		    	    var payload = {id: id, name: name, win: win};
+        		    	    console.log(payload);
+        		    	    
+        		        $.post("name", payload);
+                
+        		 }
+        };
+    }
+    
+    </script>
+</head>
+<body >
+<div class='center-contents hover-bar'><div><h1 class='gradient'>VR Tank Game Highscores</h1></div></div>
+<div class='content'>
+    <div class='content-column'>
+        <div class='card-column' id='latestwin'></div>
+        <h2>Win</h2>
+        <div class='card-column' id='win'></div>
+    </div>
+    <div class='content-column'>
+        <div class='card-column' id='latestlose'></div>
+        <h2 class='plain'>Lose</h2>
+        <div class='card-column' id='lose'></div>
+    </div>
+</div>
+</body>
+</html>
