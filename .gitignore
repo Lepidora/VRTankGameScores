@@ -76,6 +76,9 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.project
+.jshintrc
+.sublime-project
 
 # External tool builders
 .externalToolBuilders/
